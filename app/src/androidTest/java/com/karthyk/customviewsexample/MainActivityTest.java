@@ -3,7 +3,6 @@ package com.karthyk.customviewsexample;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.widget.ViewFlipper;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,51 +25,52 @@ public class MainActivityTest {
       MainActivity.class);
 
   @Test
-  public void dateText() {
+  public void ShouldDisplay_Date() {
+    onView(withId(R.id.txt_schedule_date)).check(matches(isDisplayed()));
     onView(withId(R.id.txt_schedule_date)).check(matches(withText(DEFAULT_DATE)));
   }
 
   @Test
-  public void attendingButtonClick() {
-    //Press attendingButton
-    onView(withId(R.id.btn_attending)).perform(click());
-    // Checking whether the correct popup displayed
-    onView(withText(R.string.attending_popup_dialog)).check(matches(isDisplayed()));
-    // Press Yes
-    onView(withId(android.R.id.button1)).perform(click());
-    //Checking correct layout is displayed
-    onView(withId(R.id.attendance_confirmed_layout)).check(matches(isDisplayed()));
-    resetLayout();
-  }
-
-  public void resetLayout() {
-    try {
-      mActivityTestRule.runOnUiThread(new Runnable() {
-        @Override public void run() {
-          ViewFlipper root = (ViewFlipper) mActivityTestRule.getActivity().findViewById(R.id
-              .view_switcher);
-          root.setDisplayedChild(0);
-        }
-      });
-    } catch (Throwable throwable) {
-      throwable.printStackTrace();
-    }
-  }
-
-  @Test
-  public void defaultLayout() {
+  public void ShouldPerform_Click_OnAttendingButton() {
     onView(withId(R.id.btn_attending)).check(matches(isDisplayed()));
+    onView(withId(R.id.btn_attending)).perform(click());
   }
 
   @Test
-  public void notAttendingButtonClick() {
-    //Press attendingButton
-    onView(withId(R.id.btn_not_attending)).perform(click());
-    // Checking whether the correct popup displayed
-    onView(withText(R.string.not_attending_popup_dialog)).check(matches(isDisplayed()));
-    // Press Yes
+  public void ShouldDisplay_AttendingPopup_WhenNotAttendingButtonClicked() {
+    onView(withId(R.id.btn_attending)).check(matches(isDisplayed()));
+    onView(withId(R.id.btn_attending)).perform(click());
+    onView(withText(R.string.attending_popup_dialog)).check(matches(isDisplayed()));
+  }
+
+  @Test
+  public void ShouldDisplay_ConfirmedLayout_WhenPositiveButtonClickedOnPopup() {
+    onView(withId(R.id.btn_attending)).check(matches(isDisplayed()));
+    onView(withId(R.id.btn_attending)).perform(click());
+    onView(withText(R.string.attending_popup_dialog)).check(matches(isDisplayed()));
     onView(withId(android.R.id.button1)).perform(click());
-    //Checking correct layout is displayed
+    onView(withId(R.id.attendance_confirmed_layout)).check(matches(isDisplayed()));
+  }
+
+  @Test
+  public void ShouldPerform_Click_OnNotAttendingButton() {
+    onView(withId(R.id.btn_not_attending)).check(matches(isDisplayed()));
+    onView(withId(R.id.btn_not_attending)).perform(click());
+  }
+
+  @Test
+  public void ShouldDisplay_NotAttendingPopup_WhenNotAttendingButton_Clicked() {
+    onView(withId(R.id.btn_not_attending)).check(matches(isDisplayed()));
+    onView(withId(R.id.btn_not_attending)).perform(click());
+    onView(withText(R.string.not_attending_popup_dialog)).check(matches(isDisplayed()));
+  }
+
+  @Test
+  public void ShouldDisplay_NotConfirmedLayout_WhenPositiveButtonClickedOnPopup() {
+    onView(withId(R.id.btn_not_attending)).check(matches(isDisplayed()));
+    onView(withId(R.id.btn_not_attending)).perform(click());
+    onView(withText(R.string.not_attending_popup_dialog)).check(matches(isDisplayed()));
+    onView(withId(android.R.id.button1)).perform(click());
     onView(withId(R.id.attendance_not_confirmed_layout)).check(matches(isDisplayed()));
   }
 }
