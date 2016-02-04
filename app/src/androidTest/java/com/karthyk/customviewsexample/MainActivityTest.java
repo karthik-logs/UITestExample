@@ -37,5 +37,7 @@ public class MainActivityTest {
     onView(withText(R.string.attending_popup_dialog)).check(matches(isDisplayed()));
     // Press Yes
     onView(withId(android.R.id.button1)).perform(click());
+    //Checking correct layout is displayed
+    onView(withId(R.id.attendance_confirmed_layout)).check(matches(isDisplayed()));
   }
 }
