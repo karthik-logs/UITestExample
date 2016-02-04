@@ -3,6 +3,7 @@ package com.karthyk.customviewsexample;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.widget.ViewFlipper;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,5 +40,37 @@ public class MainActivityTest {
     onView(withId(android.R.id.button1)).perform(click());
     //Checking correct layout is displayed
     onView(withId(R.id.attendance_confirmed_layout)).check(matches(isDisplayed()));
+    resetLayout();
+  }
+
+  public void resetLayout() {
+    try {
+      mActivityTestRule.runOnUiThread(new Runnable() {
+        @Override public void run() {
+          ViewFlipper root = (ViewFlipper) mActivityTestRule.getActivity().findViewById(R.id
+              .view_switcher);
+          root.setDisplayedChild(0);
+        }
+      });
+    } catch (Throwable throwable) {
+      throwable.printStackTrace();
+    }
+  }
+
+  @Test
+  public void defaultLayout() {
+    onView(withId(R.id.btn_attending)).check(matches(isDisplayed()));
+  }
+
+  @Test
+  public void notAttendingButtonClick() {
+    //Press attendingButton
+    onView(withId(R.id.btn_not_attending)).perform(click());
+    // Checking whether the correct popup displayed
+    onView(withText(R.string.not_attending_popup_dialog)).check(matches(isDisplayed()));
+    // Press Yes
+    onView(withId(android.R.id.button1)).perform(click());
+    //Checking correct layout is displayed
+    onView(withId(R.id.attendance_not_confirmed_layout)).check(matches(isDisplayed()));
   }
 }
