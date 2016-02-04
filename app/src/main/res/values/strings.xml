@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CustomViewsExample</string>
+    <string name="attending_popup_dialog">Are you sure, you are Attending?</string>
+    <string name="not_attending_popup_dialog">Are you sure, you are not Attending?</string>
 </resources>

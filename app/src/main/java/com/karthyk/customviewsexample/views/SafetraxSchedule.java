@@ -112,10 +112,11 @@ public class SafetraxSchedule extends FrameLayout implements View.OnClickListene
   @Override public void onClick(View v) {
     switch (v.getId()) {
       case R.id.btn_attending:
-        showDialog("Are you sure, you are Attending?", CONTENT_ATTENDING);
+        showDialog(getContext().getString(R.string.attending_popup_dialog), CONTENT_ATTENDING);
         break;
       case R.id.btn_not_attending:
-        showDialog("Are you sure, you are not Attending?", CONTENT_NOT_ATTENDING);
+        showDialog(getContext().getString(R.string.not_attending_popup_dialog),
+            CONTENT_NOT_ATTENDING);
         break;
       default:
     }
