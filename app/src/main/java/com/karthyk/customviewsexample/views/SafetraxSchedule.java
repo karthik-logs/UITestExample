@@ -1,5 +1,6 @@
 package com.karthyk.customviewsexample.views;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.github.vignesh_iopex.confirmdialog.Confirm;
+import com.github.vignesh_iopex.confirmdialog.Dialog;
 import com.karthyk.customviewsexample.R;
 
 public class SafetraxSchedule extends FrameLayout implements View.OnClickListener {
@@ -89,24 +92,40 @@ public class SafetraxSchedule extends FrameLayout implements View.OnClickListene
   }
 
   private void showDialog(String message, final int view) {
-    DialogInterface.OnClickListener onDialogClickListener = new DialogInterface.OnClickListener() {
-      @Override public void onClick(DialogInterface dialog, int which) {
+//    DialogInterface.OnClickListener onDialogClickListener = new DialogInterface.OnClickListener() {
+//      @Override public void onClick(DialogInterface dialog, int which) {
+//        switch (which) {
+//          case DialogInterface.BUTTON_POSITIVE:
+//            scheduleRoot.setDisplayedChild(view);
+//            break;
+//          case DialogInterface.BUTTON_NEGATIVE:
+//            scheduleRoot.setDisplayedChild(CONTENT_SCHEDULE);
+//            break;
+//          default:
+//        }
+//      }
+//    };
+
+    Confirm.OnClickListener onClickListener = new Dialog.OnClickListener() {
+      @Override public void onClick(Dialog dialog, int which) {
         switch (which) {
-          case DialogInterface.BUTTON_POSITIVE:
+          case Confirm.POSITIVE:
             scheduleRoot.setDisplayedChild(view);
             break;
-          case DialogInterface.BUTTON_NEGATIVE:
+          case Confirm.NEGATIVE:
             scheduleRoot.setDisplayedChild(CONTENT_SCHEDULE);
             break;
           default:
         }
       }
     };
-    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-    builder.setMessage(message)
-        .setPositiveButton("Yes", onDialogClickListener)
-        .setNegativeButton("No", onDialogClickListener)
-        .show();
+    Confirm.using((Activity) getContext()).ask(message).onPositive("Yes", onClickListener)
+        .onNegative("No", onClickListener).build().show();
+//    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//    builder.setMessage(message)
+//        .setPositiveButton("Yes", onDialogClickListener)
+//        .setNegativeButton("No", onDialogClickListener)
+//        .show();
   }
 
   @Override public void onClick(View v) {

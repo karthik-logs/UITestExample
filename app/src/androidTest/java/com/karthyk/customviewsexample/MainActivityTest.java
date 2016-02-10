@@ -4,6 +4,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.github.vignesh_iopex.confirmdialog.Confirm;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,7 +50,7 @@ public class MainActivityTest {
     onView(withId(R.id.btn_attending)).check(matches(isDisplayed()));
     onView(withId(R.id.btn_attending)).perform(click());
     onView(withText(R.string.attending_popup_dialog)).check(matches(isDisplayed()));
-    onView(withId(android.R.id.button1)).perform(click());
+    onView(withId(Confirm.POSITIVE)).perform(click());
     onView(withId(R.id.attendance_confirmed_layout)).check(matches(isDisplayed()));
   }
 
@@ -70,7 +72,7 @@ public class MainActivityTest {
     onView(withId(R.id.btn_not_attending)).check(matches(isDisplayed()));
     onView(withId(R.id.btn_not_attending)).perform(click());
     onView(withText(R.string.not_attending_popup_dialog)).check(matches(isDisplayed()));
-    onView(withId(android.R.id.button1)).perform(click());
+    onView(withId(Confirm.POSITIVE)).perform(click());
     onView(withId(R.id.attendance_not_confirmed_layout)).check(matches(isDisplayed()));
   }
 }
